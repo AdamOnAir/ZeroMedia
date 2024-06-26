@@ -1,4 +1,10 @@
 <?php
+/*
+ * This script moves files from the uploads directory to their respective
+ * directories based on their file extensions.
+ */
+
+// Define the mapping of file extensions to target directories
 $extensions = array(
     'mp4' => 'videos/',
     'mov' => 'videos/',
@@ -13,24 +19,27 @@ $extensions = array(
 
 $uploadDir = 'uploads/';
 
-// Loop through all files in the uploads directory
-$files = scandir($uploadDir);
-foreach ($files as $file) {
-    if ($file !== '.' && $file !== '..') {
-        $fileExtension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+// Check if a file was uploaded
+if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+    $file = $_FILES['file'];
+    $fileName = $file['name'];
+    $fileTmpName = $file['tmp_name'];
+    $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
-        // Check if the file extension is in the $extensions array
-        if (array_key_exists($fileExtension, $extensions)) {
-            $targetDir = $extensions[$fileExtension];
+    // Check if the file extension is in the $extensions array
+    if (array_key_exists($fileExtension, $extensions)) {
+        $targetDir = $extensions[$fileExtension];
 
-            // Move the file to the target directory
-            if (rename($uploadDir . $file, $targetDir . $file)) {
-                echo "Moved $file to $targetDir\n";
-            } else {
-                echo "Error moving $file\n";
-            }
+        // Move the file to the target directory
+        $targetPath = $targetDir . $fileName;
+        if (rename($fileTmpName, $targetPath)) {
+            echo "File $fileName moved to $targetDir\n";
         } else {
-            echo "Unknown file extension for $file\n";
+            echo "Error moving $fileName\n";
         }
+    } else {
+        echo "Unknown file extension for $fileName\n";
     }
+} else {
+    echo "No file was uploaded.\n";
 }
