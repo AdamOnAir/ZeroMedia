@@ -1,15 +1,60 @@
 <?php
+// Define the mapping of file extensions to target directories
+$extensions = array(
+    'mp4' => 'videos/',
+    'mov' => 'videos/',
+    'avi' => 'videos/',
+    'jpg' => 'images/',
+    'png' => 'images/',
+    'gif' => 'images/',
+    'mp3' => 'music/',
+    'wav' => 'music/',
+    'flac' => 'music/',
+    'ogg' =>'music/',
+    'zip' => 'archives/',
+    'rar' => 'archives/',
+    '7z' => 'archives/',
+    'pdf' => 'documents/',
+    'doc' => 'documents/',
+    'docx' => 'documents/',
+    'xls' => 'documents/',
+    'xlsx' => 'documents/',
+    'ppt' => 'documents/',
+    'pptx' => 'documents/',
+    'odt' => 'documents/',
+    'ods' => 'documents/',
+    'odp' => 'documents/',
+    'csv' => 'documents/',
+    'txt' => 'documents/',
+    'rtf' => 'documents/',
+    'tex' => 'documents/',    
+);
+
+$uploadDir = 'uploads/';
+
 // Handle file upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     $file = $_FILES['file'];
-    $uploadDir = 'uploads/';
     $fileName = $file['name'];
     $fileTmpName = $file['tmp_name'];
+    $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
-    if (move_uploaded_file($fileTmpName, $uploadDir . $fileName)) {
-        $message = "File uploaded successfully.";
+    // Check if the file extension is in the $extensions array
+    if (array_key_exists($fileExtension, $extensions)) {
+        $targetDir = $uploadDir . $extensions[$fileExtension];
+
+        // Move the file to the target directory
+        $targetPath = $targetDir . $fileName;
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+        if (move_uploaded_file($fileTmpName, $targetPath)) {
+            $message = "File $fileName uploaded and moved to $targetDir";
+        } else {
+            $message = "Error uploading and moving $fileName";
+        }
     } else {
-        $message = "Error uploading file.";
+        $message = "Unknown file extension for $fileName, report it to your administrator";
     }
 }
 ?>
@@ -21,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 </head>
 <body>
     <header>
-        <h1>PyMedia</h1>
+        <h1>ZeroMedia</h1>
     </header>
 
     <main>
