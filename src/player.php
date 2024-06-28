@@ -52,7 +52,6 @@ if (isset($_GET['file'])) {
         }
     </script>
 </body>
-
 </html>
 <?php
     } else {
