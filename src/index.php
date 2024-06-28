@@ -50,8 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         }
         if (move_uploaded_file($fileTmpName, $targetPath)) {
             $message = "File $fileName uploaded and moved to $targetDir";
-        exit;
-
         } else {
             $message = "Error uploading and moving $fileName";
         }
@@ -66,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     <title>ZeroMedia</title>
     <link rel="stylesheet" href="style.css">
     <meta charset="utf-8">
-    
 </head>
 <body>
     <header>
