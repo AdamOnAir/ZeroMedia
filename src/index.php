@@ -50,9 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         }
         if (move_uploaded_file($fileTmpName, $targetPath)) {
             $message = "File $fileName uploaded and moved to $targetDir";
-            // After successful file upload
-        $videoFileName = $fileName; // Assuming $fileName is the uploaded video file name
-        header("Location: player.php?video=" . $videoFileName);
         exit;
 
         } else {

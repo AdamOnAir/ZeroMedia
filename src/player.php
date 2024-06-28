@@ -82,6 +82,7 @@ if (isset($_GET['search'])) {
         <form action="player.php" method="GET">
             <input type="text" name="search" placeholder="Search for a file...">
             <button type="submit">Search</button>
+            <br>
         </form>
         <a href="index.php">Back to Upload</a>
     </div>
