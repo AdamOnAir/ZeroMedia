@@ -65,14 +65,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 <head>
     <title>ZeroMedia</title>
     <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    
 </head>
 <body>
     <header>
         <h1>ZeroMedia</h1>
         <nav>
             <ul>
-                <li><a href="index.php">Upload</a></li>
-                <li><a href="player.php">Player</a></li>
+                <li><a href="index.php">Home</a></li>
             </ul>
         </nav>
     </header>
