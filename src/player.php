@@ -13,46 +13,46 @@ if (isset($_GET['file'])) {
 <html>
 <head>
     <title>ZeroMedia Player</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-        }
-        #player {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        <?php if ($isVideo) { ?>
-        video {
-            max-width: 100%;
-            max-height: 100%;
-        }
-        <?php } else { ?>
-        audio {
-            width: 100%;
-        }
-        <?php } ?>
-    </style>
+        
 </head>
 <body>
     <div id="player">
-        <?php if ($isVideo) { ?>
-        <video controls>
-            <source src="<?php echo $filePath; ?>" type="video/<?php echo $fileExtension; ?>">
-            Your browser does not support the video tag.
-        </video>
-        <?php } else { ?>
-        <audio controls>
-            <source src="<?php echo $filePath; ?>" type="audio/<?php echo $fileExtension; ?>">
-            Your browser does not support the audio tag.
-        </audio>
-        <?php } ?>
+        <form>
+            <input type="file" id="fileInput" onchange="loadFile(this.files[0])">
+        </form>
+        <div id="playerContainer"></div>
     </div>
+    
+    <script>
+        function loadFile(file) {
+            // Clear the previous player
+            var playerContainer = document.getElementById('playerContainer');
+            playerContainer.innerHTML = '';
+
+            // Create a new player element based on the file type
+            var fileExtension = file.name.split('.').pop().toLowerCase();
+            var isVideo = ['mp4', 'mov', 'avi'].includes(fileExtension);
+            var player;
+
+            if (isVideo) {
+                player = document.createElement('video');
+                player.controls = true;
+            } else if (['mp3', 'wav', 'flac'].includes(fileExtension)) {
+                player = document.createElement('audio');
+                player.controls = true;
+            } else {
+                alert('Unsupported file format.');
+                return;
+            }
+
+            var fileURL = URL.createObjectURL(file);
+            player.src = fileURL;
+
+            playerContainer.appendChild(player);
+        }
+    </script>
 </body>
+
 </html>
 <?php
     } else {
