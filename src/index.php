@@ -50,6 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         }
         if (move_uploaded_file($fileTmpName, $targetPath)) {
             $message = "File $fileName uploaded and moved to $targetDir";
+            // After successful file upload
+        $videoFileName = $fileName; // Assuming $fileName is the uploaded video file name
+        header("Location: player.php?video=" . $videoFileName);
+        exit;
+
         } else {
             $message = "Error uploading and moving $fileName";
         }
@@ -69,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         <h1>ZeroMedia</h1>
         <nav>
             <ul>
-                <li><a href="#">Upload</a></li>
+                <li><a href="index.php">Upload</a></li>
                 <li><a href="player.php">Player</a></li>
             </ul>
         </nav>
