@@ -13,7 +13,7 @@ if (isset($_GET['file'])) {
 <html>
 <head>
     <title>ZeroMedia Player</title>
-        
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
     <div id="player">
