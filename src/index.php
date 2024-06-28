@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         <nav>
             <ul>
                 <li><a href="#">Upload</a></li>
-                <li><a href="#" onclick="showPlayer()">Player</a></li>
+                <li><a href="player.php">Player</a></li>
             </ul>
         </nav>
     </header>
@@ -84,27 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
                 <input type="submit" value="Upload">
             </form>
         </div>
-
-        <div id="player-section" style="display: none;">
-            <iframe id="player-iframe" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
     </main>
-
-    <footer>
-        &copy; 2023 ZeroMedia
-    </footer>
-
-    <script>
-        function showPlayer() {
-            var playerSection = document.getElementById('player-section');
-            var uploadSection = document.getElementById('upload-section');
-
-            playerSection.style.display = 'block';
-            uploadSection.style.display = 'none';
-
-            var playerIframe = document.getElementById('player-iframe');
-            playerIframe.src = 'player.php'; // Replace with the actual file path
-        }
-    </script>
 </body>
 </html>

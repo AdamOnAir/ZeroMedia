@@ -1,8 +1,9 @@
 <?php
-// Check if a file path is provided in the URL
-if (isset($_GET['file'])) {
-    $filePath = $_GET['file'];
-    $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+// Check if a file is uploaded
+if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+    $file = $_FILES['file'];
+    $filePath = $file['tmp_name'];
+    $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
     // Check if the file extension is supported
     $supportedExtensions = array('mp4', 'mov', 'avi', 'mp3', 'wav', 'flac');
@@ -13,44 +14,27 @@ if (isset($_GET['file'])) {
 <html>
 <head>
     <title>ZeroMedia Player</title>
-    <link rel="stylesheet" href="style.css"/>
+    <style>
+        /* Add your CSS styles here */
+    </style>
 </head>
 <body>
     <div id="player">
-        <form>
-            <input type="file" id="fileInput" onchange="loadFile(this.files[0])">
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput" accept="video/*,audio/*" required>
+            <input type="submit" value="Play">
         </form>
-        <div id="playerContainer"></div>
+        <?php if ($isVideo) { ?>
+            <video controls>
+                <source src="<?php echo $filePath; ?>" type="video/<?php echo $fileExtension; ?>">
+            </video>
+        <?php } else { ?>
+            <audio controls>
+                <source src="<?php echo $filePath; ?>" type="audio/<?php echo $fileExtension; ?>">
+            </audio>
+        <?php } ?>
+        <a href="index.php">Back to Upload</a>
     </div>
-    
-    <script>
-        function loadFile(file) {
-            // Clear the previous player
-            var playerContainer = document.getElementById('playerContainer');
-            playerContainer.innerHTML = '';
-
-            // Create a new player element based on the file type
-            var fileExtension = file.name.split('.').pop().toLowerCase();
-            var isVideo = ['mp4', 'mov', 'avi'].includes(fileExtension);
-            var player;
-
-            if (isVideo) {
-                player = document.createElement('video');
-                player.controls = true;
-            } else if (['mp3', 'wav', 'flac'].includes(fileExtension)) {
-                player = document.createElement('audio');
-                player.controls = true;
-            } else {
-                alert('Unsupported file format.');
-                return;
-            }
-
-            var fileURL = URL.createObjectURL(file);
-            player.src = fileURL;
-
-            playerContainer.appendChild(player);
-        }
-    </script>
 </body>
 </html>
 <?php
@@ -58,6 +42,23 @@ if (isset($_GET['file'])) {
         echo "Unsupported file format.";
     }
 } else {
-    echo "No file specified.";
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ZeroMedia Player</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="player">
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput" accept="video/*,audio/*" required>
+            <input type="submit" value="Play">
+        </form>
+        <a href="index.php">Back to Upload</a>
+    </div>
+</body>
+</html>
+<?php
 }
 ?>
