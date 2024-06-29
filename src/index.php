@@ -71,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
+                <li><a href="download.php">Download</a></li>
             </ul>
         </nav>
     </header>
