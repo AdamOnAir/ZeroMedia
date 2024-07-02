@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         <h1>ZeroMedia</h1>
         <nav>
             <ul>
-                <li><a href="index.php">Home</a></li>
+                <li><a href="http://zerolab.gotdns.ch">Home</a></li>
                 <li><a href="download.php">Download</a></li>
             </ul>
         </nav>

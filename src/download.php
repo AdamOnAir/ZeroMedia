@@ -45,8 +45,8 @@ function searchFiles($dir, $query) {
         <h1>ZeroMedia</h1>
         <nav>
             <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="download.php">Download</a></li>
+                <li><a href="http://zerolab.gotdns.ch">Home</a></li>
+                <li><a href="index.php">Download</a></li>
             </ul>
         </nav>
     </header>
